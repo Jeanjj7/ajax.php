@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aula 01 - JQuery</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
-    <link rel="stylesheet" href="estilo.css">  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="estilo.css">
 </head>
+
 <body>
-    
+
     <h1>Introdução ao JQuery</h1>
-    <p>jQuery é uma biblioteca JavaScript rápida, leve e rica em recursos, projetada para simplificar tarefas comuns de desenvolvimento web. Com jQuery, você pode manipular o DOM, controlar eventos, criar animações e facilitar a comunicação AJAX em suas páginas web.</p>
+    <p>jQuery é uma biblioteca JavaScript rápida, leve e rica em recursos, projetada para simplificar tarefas comuns de
+        desenvolvimento web. Com jQuery, você pode manipular o DOM, controlar eventos, criar animações e facilitar a
+        comunicação AJAX em suas páginas web.</p>
     <br><br>
     <hr>
- 
+
 
     <h1>Interagindo com botões</h1>
     <button id="btn1"> Botão 1</button>
@@ -21,14 +25,14 @@
     <button id="btn3"> Botão 3</button>
     <br><br>
     <hr>
-    
+
     <h1>Mostrar ou esconder objetos</h1>
     <button id="btnEsconder"> Esconder div 1</button>
     <button id="btnMostrar"> Mostrar div 1</button>
     <button id="btnAlternar"> Esconder/Mostrar imagem</button>
     <br><br>
     <img id="carregando" src="carregando.gif" height="70">
-    <div id="divUm"> DIV 1</div> 
+    <div id="divUm"> DIV 1</div>
     <br><br>
     <hr>
 
@@ -57,10 +61,10 @@
         <div>
             <label>Nome: </label>
             <input type="text" id="caixa_nome"><br><br>
-        
+
             <label>Data de nascimento: </label>
             <input type="date" id="caixa_data"> <br><br>
-        
+
             <label>Cargo: </label>
             <select id="caixa_cargo">
                 <option value="">Selecione</option>
@@ -85,10 +89,10 @@
         <div>
             <label>Nome: </label>
             <input type="text" id="caixa_nome2"><br><br>
-        
+
             <label>Data de nascimento: </label>
             <input type="date" id="caixa_data2"> <br><br>
-        
+
             <label>Cargo: </label>
             <select id="caixa_cargo2">
                 <option value="">Selecione</option>
@@ -152,10 +156,10 @@
         <div>
             <label>Nome: </label>
             <input type="text" id="caixa_nome3"><br><br>
-        
+
             <label>Data de nascimento: </label>
             <input type="date" id="caixa_data3"> <br><br>
-        
+
             <label>Cargo: </label>
             <select id="caixa_cargo3">
                 <option value="">Selecione</option>
@@ -176,49 +180,104 @@
     <hr>
 
     <h1>Editar/Deletar com AJAX</h1>
+    <div id="conteudo5">
+        <img src="loading-wtf.gif" height="50">
+    </div>
     <br><br>
     <hr>
 
+    <div id="escurecer">
+        <img src="carregando.gif" alt="imgCarregando" height="60">
+        <div id="formulario">
+            <button id="btnfecha">X</button>
+            <h1>Editar/Deletar</h1>
+            <br><br>
+            ID: <input type="text" id="id_pessoa"><br><br>
+            Nome: <input type="text" id="nome_pessoa"><br> <br>
+            Data de nascimento: <input type="date" id="data_pessoa"><br> <br>
+            Cargo: <input type="text" id="cargo_pessoa"><br> <br>
+            <button id="btaAtualizar">Salvar</button>
+            <button id="btndeletar">Apagar</button>
+        </div>
+    </div>
+
     <script>
+        $(document).on("click", ".cartao_pessoa", function () {
+            $("#escurecer").show();
+        
+            var id = $(this).find(".codigo").text();
+            var nome = $(this).find(".nome").text();
+            var data = $(this).find(".data_nasc").text();
+            var cargo = $(this).find(".cargo").text();
+
+            $("#id_pessoa").val(id);
+            $("#nome_pessoa").val(nome);
+            $("#data_pessoa").val(data);
+            $("#cargo_pessoa").val(cargo);
+
+        });
+
+        $("#btndeletar").click(function(){
+            if (confirm("tem certezar")) {
+            
+            }else{
+
+            }
+        });
+
+        $("#btnfecha").click(function(){
+            $("#escurecer").hide();
+        });
+
         // Quando a página estiver pronta
-        $(document).ready(function(){
+        $(document).ready(function () {
+            $("#imgCarregando").hide();
+            $("#escurecer").hide();
+
+            // $(".cartao_pessoa").click(function(){
+            //     $("#escurecer").show();
+            // });
+
+            $("#conteudo5").load("consultar2.php");
             // alert("Tudo certo");
             //Reconhecer o click simples
-            $("#btn1").click(function(){
+            $("#btn1").click(function () {
                 alert("Você clicou no botão1");
             });
             //Reconhecer o click duplo
-            $("#btn2").dblclick(function(){
+            $("#btn2").dblclick(function () {
                 alert("Botão2 clicado 2x!");
             });
 
             //Reconhecer quando passar o mouse
-            $("#btn3").hover(function(){
+            $("#btn3").hover(function () {
                 alert("Você passou o mouse!");
             });
 
-            $("#btnEsconder").click(function(){
+            $("#btnEsconder").click(function () {
                 //Esconder a divUm
                 $("#divUm").hide();
             });
 
-            $("#btnMostrar").click(function(){
+            $("#btnMostrar").click(function () {
                 //Mostrar a divUm
                 $("#divUm").show();
             });
 
-            $("#btnAlternar").click(function(){
+            $("#btnAlternar").click(function () {
                 // Alternar em exibir/esconder
                 $("#carregando").toggle();
             });
 
-            $("#btnAlterarEstilo").click(function(){
+            $("#btnAlterarEstilo").click(function () {
                 //Alterar estilo css
-                $("#divDois").css({"width": "500px",
-                                   "height": "300px"});
+                $("#divDois").css({
+                    "width": "500px",
+                    "height": "300px"
+                });
             });
 
-            $("#btnMudarHtml").click(function(){
+            $("#btnMudarHtml").click(function () {
                 // $('#divTres').html("<h1>Texto</h1>");
                 // $('#divTres').html("<img src='carregando.gif' height='20'>");
                 var conteudo = "";
@@ -228,30 +287,30 @@
                 conteudo += "<h2>Título 2</h2>";
 
                 $('#divTres').html(conteudo);
-                $('#divTres').css({"height":"400px"});
-                
-            }); 
-            
-            $("#btnCapturar").click(function(){
+                $('#divTres').css({ "height": "400px" });
+
+            });
+
+            $("#btnCapturar").click(function () {
                 var texto1, texto2, texto3;
                 //Capturar o texto dentro de elementos
                 texto1 = $("#divQuatro").text();
                 texto2 = $("#divCinco").text();
-                texto3 = $("#divSeis").text();                
+                texto3 = $("#divSeis").text();
                 alert(texto1 + texto2 + texto3);
             });
 
-            $("#btnObterDados").click(function(){
+            $("#btnObterDados").click(function () {
                 var nome = $("#caixa_nome").val();
                 var data = $("#caixa_data").val();
                 var cargo = $("#caixa_cargo").val();
 
                 //Acrecenta o conteúdo e APAGA o anterior
-                $("#conteudo1").html("<h1>"+nome+"</h1>");
+                $("#conteudo1").html("<h1>" + nome + "</h1>");
 
                 //append acrecenta SEM APAGAR o anterior
-                $("#conteudo1").append("<h1>"+data+"</h1>");
-                $("#conteudo1").append("<h1>"+cargo+"</h1>");
+                $("#conteudo1").append("<h1>" + data + "</h1>");
+                $("#conteudo1").append("<h1>" + cargo + "</h1>");
 
                 //Limpar os campos do formulários
                 $("#caixa_data").val("");
@@ -260,24 +319,24 @@
             });
 
             //Colocar dados em campos de formulário
-            $("#btnObterDados2").click(function(){
+            $("#btnObterDados2").click(function () {
                 $("#caixa_nome2").val("Gabriel das Meninas");
                 $("#caixa_data2").val("2000-03-15");
                 $("#caixa_cargo2").val("Gestor de TI");
 
                 $("#conteudo2").html("<h1>Inserido!</h1>")
             });
-            
+
 
             //Usando $(this) e find()
-            $(".cartoes").click(function(){
+            $(".cartoes").click(function () {
                 /*Capturar o texto da classe nome_produto
                 do cartão que foi clicado(this = este)*/
                 var nome = $(this).find(".nome_produto").text();
                 var preco = $(this).find(".preco_produto").text();
 
-                alert("O nome do produto é: "+ nome);
-                alert("O preço do produto é: "+ preco);
+                alert("O nome do produto é: " + nome);
+                alert("O preço do produto é: " + preco);
             });
 
             //Carregar dados de uma página dentro de uma div
@@ -286,18 +345,20 @@
             //conteudo4
             $("#conteudo4").load("consultar.php");
 
-            $("#btnCadastrar").click(function(){
+            $("#btnCadastrar").click(function () {
                 $("#conteudo4").html("<img src='loading-wtf.gif' height='100px'>")
                 var nome_capturado = $("#caixa_nome3").val();
                 var data_capturado = $("#caixa_data3").val();
                 var cargo_capturado = $("#caixa_cargo3").val();
-            
+
                 $.ajax({
-                    url:"inserir.php",
-                    method:"POST",
-                    data: {nome_pessoa:nome_capturado,
-                           data_nascimento:data_capturado,
-                           cargo_pessoa:cargo_capturado },
+                    url: "inserir.php",
+                    method: "POST",
+                    data: {
+                        nome_pessoa: nome_capturado,
+                        data_nascimento: data_capturado,
+                        cargo_pessoa: cargo_capturado
+                    },
 
                     success: function (resposta) {
                         alert(resposta);
@@ -307,7 +368,7 @@
                         alert("Arquivo invalido!!");
                     }
                 });
-            
+
             });
 
 
@@ -317,4 +378,5 @@
 
 
 </body>
+
 </html>
