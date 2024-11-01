@@ -181,13 +181,13 @@
 
     <h1>Editar/Deletar com AJAX</h1>
     <div id="conteudo5">
-        <img src="loading-wtf.gif" height="50">
+        <img src="mario.gif" height="50">
     </div>
     <br><br>
     <hr>
 
     <div id="escurecer">
-        <img src="carregando.gif" alt="imgCarregando" height="60">
+        <img src="mario.gif" id="imgCarregando" height="60">
         <div id="formulario">
             <button id="btnfecha">X</button>
             <h1>Editar/Deletar</h1>
@@ -196,15 +196,52 @@
             Nome: <input type="text" id="nome_pessoa"><br> <br>
             Data de nascimento: <input type="date" id="data_pessoa"><br> <br>
             Cargo: <input type="text" id="cargo_pessoa"><br> <br>
-            <button id="btaAtualizar">Salvar</button>
-            <button id="btndeletar">Apagar</button>
+            <button class="btn" id="btaAtualizar">Salvar</button>
+            <button class="btn" id="btndeletar">Apagar</button>
+<!-- hh -->
+
+<!-- hh -->
+
+
+
         </div>
     </div>
 
     <script>
+        $("#btaAtualizar").click(function(){
+            var id_escolhido = $("#id_pessoa").val();
+            var nome_escolhido = $("#nome_pessoa").val();
+            var data_escolhido = $("#data_pessoa").val();
+            var cargo_escolhido = $("#cargo_pessoa").val(); 
+
+            $("#formulario").hide();
+            $("#imgCarregando").show();
+
+            $.ajax({
+                   url:"atualizar.php",
+                   method: 'POST',
+                   data:{id: id_escolhido,
+                    nome: nome_escolhido,
+                    data: data_escolhido,
+                    cargo: cargo_escolhido
+                },
+                
+                   success: function (resposta){
+                    alert(resposta);
+                    $("#escurecer").hide();
+                    $("#conteudo5").load("consultar2.php");
+                   },
+                   error: function (){
+                    alert("Não foi possivel atualizar");
+                   }
+                   
+                });
+        });
+
         $(document).on("click", ".cartao_pessoa", function () {
             $("#escurecer").show();
-        
+            $("#formulario").show();
+            $("#imgCarregando").hide();
             var id = $(this).find(".codigo").text();
             var nome = $(this).find(".nome").text();
             var data = $(this).find(".data_nasc").text();
@@ -218,10 +255,23 @@
         });
 
         $("#btndeletar").click(function(){
-            if (confirm("tem certezar")) {
-            
-            }else{
-
+            if (confirm("tem certezar que deseja apagar?")) {
+                var id_escolhido = $("#id_pessoa").val();
+                $("#formulario").hide();
+                $("#imgCarregando").show();
+                $.ajax({
+                   url:"deletar.php",
+                   method:"POST",
+                   data:{id: id_escolhido},
+                   success: function (resposta){
+                    alert(resposta);
+                    $("#escurecer").hide();
+                    $("#conteudo5").load("consultar2.php");
+                   },
+                   error: function (){
+                    alert("Falha ao enviar dados");
+                   }
+                });
             }
         });
 
